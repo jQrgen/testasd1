@@ -2,6 +2,7 @@
 angular.module('angularfire.login', ['firebase', 'angularfire.firebase'])
 
   .run(function(simpleLogin) {
+    console.log("simplelogin.init");
     simpleLogin.init();
   })
 
@@ -14,6 +15,7 @@ angular.module('angularfire.login', ['firebase', 'angularfire.firebase'])
     return {
       init: function() {
         auth = $firebaseSimpleLogin(firebaseRef());
+        $rootScope.auth = auth;
         return auth;
       },
 
@@ -28,8 +30,12 @@ angular.module('angularfire.login', ['firebase', 'angularfire.firebase'])
        * @returns {*}
        */
       login: function(provider, callback) {
+        console.log("login");
         assertAuth();
-        auth.$login(provider, {rememberMe: true}).then(function(user) {
+        auth.$login(provider, {
+          rememberMe: true,
+          scope: 'user_photos'
+        }).then(function(user) {
           if( callback ) {
             //todo-bug https://github.com/firebase/angularFire/issues/199
             $timeout(function() {

@@ -8,11 +8,14 @@ angular.module('devApp', [
   'firebase',
   'angularfire.firebase',
   'angularfire.login',
-  'simpleLoginTools'
+  'simpleLoginTools',
+  'cordova.geolocation',
+  'cordova.ready'
 ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
+        authRequired: true,
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
